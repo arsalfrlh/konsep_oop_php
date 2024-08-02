@@ -40,5 +40,11 @@ if($aksi == "tambahbuku"){
 }elseif($aksi == "pinjambuku"){
     $model->pinjambuku($_POST['id_user'],$_POST['id_buku'],$_POST['tgl_pinjam'],$_POST['jumlah']);
     echo '<script>alert("Pinjam Buku Berhasil"); window.location="../view/tampil.php";</script>';
+}elseif($aksi == "hapuspinjam"){
+    $model->hapuspinjam($_GET['id']);
+    echo '<script>alert("Hapus  Pinjam Berhasil"); window.location="../view/pinjam.php";</script>';
+}elseif($aksi == "kembalikan"){
+    $model->kembalikan($_GET['id']);
+    echo '<script>alert("Kembalikan Buku Berhasil"); window.location="../view/pinjam.php";</script>';
 }
 ?>
