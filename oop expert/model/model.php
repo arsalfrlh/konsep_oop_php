@@ -70,5 +70,23 @@ class model{
     function pinjambuku($id_user,$id_buku,$tgl_pinjam,$jumlah){
         mysqli_query($this->conn,"INSERT INTO tbl_pinjam (id_pinjam,id_user,id_buku,tanggal_pinjam,jumlah) VALUES ('','$id_user','$id_buku','$tgl_pinjam','$jumlah')");
     }
+    
+    function tampilpinjam($id){
+        $query = mysqli_query($this->conn,"SELECT * FROM tbl_pinjam LEFT JOIN tbl_user ON tbl_pinjam.id_user = tbl_user.id_user LEFT JOIN tbl_buku ON tbl_pinjam.id_buku = tbl_buku.id_buku WHERE tbl_pinjam.id_user = '$id'");
+        $hasil = [];
+        while($pinjam = mysqli_fetch_array($query)){
+            $hasil[] = $pinjam;
+        }
+        return $hasil;
+    }
+
+    function hapuspinjam($id){
+        mysqli_query($this->conn,"DELETE FROM tbl_pinjam WHERE id_pinjam='$id'");
+    }
+
+    function kembalikan($id){
+        $tgl_kembali = date('y-m-d');
+        mysqli_query($this->conn,"UPDATE tbl_pinjam SET tanggal_kembali='$tgl_kembali', jumlah='0' WHERE id_pinjam='$id'");
+    }
 }
 ?>
