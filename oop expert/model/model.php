@@ -20,9 +20,7 @@ class model{
         return $hasil;
     }
 
-    function tambahbuku($namafoto,$tmp,$judul,$stok){
-        $lokasi = '../assets/img/' . $namafoto;
-        move_uploaded_file($tmp,$lokasi);
+    function tambahbuku($lokasi,$judul,$stok){
         mysqli_query($this->conn,"INSERT INTO tbl_buku VALUES ('','$lokasi','$judul','$stok')");
     }
     function hapusbuku($id){
