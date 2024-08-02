@@ -13,6 +13,7 @@ class model{
 
     function tampilbuku(){
         $query = mysqli_query($this->conn,"SELECT * FROM tbl_buku");
+        $hasil = [];
         while($buku=mysqli_fetch_array($query)){
             $hasil[] = $buku;
         }
