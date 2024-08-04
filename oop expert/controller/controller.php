@@ -3,27 +3,21 @@ include '../model/model.php';
 $model = new model();
 $aksi = $_GET['aksi'];
 if($aksi == "tambahbuku"){
+    $max_size = 2 * 1024 * 1024;
+    $acc = array("image/png","image/jpg","image/jpeg");
+
     $namafoto = $_FILES['gambar']['name'];
     $tmp = $_FILES['gambar']['tmp_name'];
-    $file_ext = strtolower(end(explode('.', $namafoto)));
+    $type = $_FILES['gambar']['type'];
     $size = $_FILES['gambar']['size'];
 
-    $acc = array('jpg','jpeg','png');
-    $max_size = 2 * 1024 * 1024;
-    if(in_array($file_ext,$acc)){
-        if($size <= $max_size){
-            $lokasi = '../assets/img/' . $namafoto;
-            if(move_uploaded_file($tmp,$lokasi)){
-                $model->tambahbuku($lokasi,$_POST['judul'],$_POST['stok']);
-                echo '<script>alert("Tambah Berhasil"); window.location="../view/tampil.php";</script>';
-            }else{
-                echo '<script>alert("Tambah Buku Gagal"); window.history.back();</script>';
-            }
-        }else{
-            echo '<script>alert("Ukuran Terlalu Besar"); window.history.back();</script>';
-        }
+    if(in_array($type,$acc) && $size <= $max_size){
+        $lokasi = '../assets/img' . $namafoto;
+        move_uploaded_file($tmp,$lokasi);
+        $model->tambahbuku($lokasi,$_POST['judul'],$_POST['stok']);
+        echo '<script>alert("Tambah Buku Berhasil"); window.location="../view/tampil.php";</script>';
     }else{
-        echo '<script>alert("File harus berupa gambar"); window.history.back();</script>';
+        echo '<script>alert("Tambah Buku Gagal Type harus berupa png, jpg, jpeg dan max ukuran hanya 2mb"); window.history.back();</script>';
     }
 }elseif($aksi == "hapus"){
     $model->hapusbuku($_GET['id']);
