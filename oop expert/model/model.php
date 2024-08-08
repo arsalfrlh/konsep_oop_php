@@ -86,5 +86,24 @@ class model{
         $tgl_kembali = date('y-m-d');
         mysqli_query($this->conn,"UPDATE tbl_pinjam SET tanggal_kembali='$tgl_kembali', jumlah='0' WHERE id_pinjam='$id'");
     }
+
+    function jumlahbuku(){
+        $query = mysqli_num_rows(mysqli_query($this->conn,"SELECT * FROM tbl_buku"));
+        echo $query;
+    }
+
+    function jumlahuser(){
+        $query = mysqli_num_rows(mysqli_query($this->conn,"SELECT * FROM tbl_user"));
+        echo $query;
+    }
+
+    function cari($cari){
+        $query = mysqli_query($this->conn,"SELECT * FROM tbl_buku WHERE judul like '%".$cari."%'");
+        $hasil = [];
+        while($buku=mysqli_fetch_array($query)){
+            $hasil[] = $buku;
+        }
+        return $hasil;
+    }
 }
 ?>
