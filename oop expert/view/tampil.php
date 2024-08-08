@@ -15,6 +15,10 @@ $model = new model();
     <h1>Data buku</h1>
     <a href="../index.php">Kembali</a>
     <a href="tambah-buku.php">Tambah</a>
+    <form action="tampil.php" method="get">
+        <input type="text" name="cari" value="<?php if(isset($_GET['cari'])){ echo $_GET['cari']; } ?>">
+        <input type="submit" value="Cari">
+    </form>
     <table border="1">
         <tr>
             <th>No</th>
@@ -23,9 +27,16 @@ $model = new model();
             <th>Stok</th>
             <th>Aksi</th>
         </tr>
-    <?php
+<?php
+    if(isset($_GET['cari'])){
+        $cari = $_GET['cari'];
+        $list_buku = $model->cari($cari);
+    }else{
+        $list_buku = $model->tampilbuku();
+    }
+    if(!empty($list_buku)){
     $no = 1;
-    foreach($model->tampilbuku() as $buku){
+    foreach($list_buku as $buku){
     ?>
         <tr>
             <td><?php echo $no++ ?></td>
@@ -36,7 +47,10 @@ $model = new model();
             <a href="../controller/controller.php?id=<?php echo $buku['id_buku']; ?>&aksi=hapus">Hapus</a>
             <a href="pinjam-buku.php?id=<?php echo $buku['id_buku']; ?>">Pinjam</a></td>
         </tr>
-        <?php } ?>
+        <?php } 
+        }else{
+        echo '<tr><td colspan="5">Belum ada data Buku</td></tr>';
+        } ?>
     </table>
 </body>
 </html>
