@@ -2,6 +2,8 @@
 session_start();
 $login = $_SESSION['login'];
 if($login == 1){
+    include 'model/model.php';
+    $model = new model();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +25,14 @@ if($login == 1){
         <tr>
             <td>Profile</td>
             <td><a href="view/profile.php?id=<?php echo $_SESSION['id_user'] ?>">disini</a></td>
+        </tr>
+        <tr>
+            <td>Jumlah Buku</td>
+            <td><?php echo $model->jumlahbuku() ?></td>
+        </tr>
+        <tr>
+            <td>Jumlah User</td>
+            <td><?php echo $model->jumlahuser() ?></td>
         </tr>
     </table>
 </body>
